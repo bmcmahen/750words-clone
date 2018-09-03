@@ -1,8 +1,7 @@
 .Write {
   max-width: 600px;
-  padding: 2.2em 0;
+  padding: 0.75em 0;
   margin: 0 auto;
-  margin-top: 3rem;
 }
 
 .Write .public-DraftStyleDefault-block {
@@ -24,11 +23,62 @@ nav a {
 nav {
   position: fixed;
   top: 0;
+  left: 0;
+
+  color: #34495e;
+}
+
+nav > div {
+  position: relative;
+  padding: 1.5rem;
+}
+
+.Write--links {
+  margin-bottom: 1.5rem;
+}
+
+.Write--links > *.sub {
+  margin-right: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04rem;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.Write--title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #08e;
+}
+
+nav {
+  transition: 0.25s cubic-bezier(0.075, 0.82, 0.165, 1) transform;
+  transform: translateX(-100%);
+}
+
+nav.expanded {
+  transform: translateX(0);
+}
+
+nav button.Write--close {
+  display: none;
+}
+
+nav button.Write--close {
+  left: 100%;
+  display: block;
+  display: block;
+  position: absolute;
+  top: 1.5em;
+}
+
+nav.expanded button.Write--close {
+  display: none;
   right: 0;
+}
 
-  color: #7f8c8d;
-  margin-top: 1em;
-  margin-right: 1em;
-
-  font-size: 0.9em;
+nav.expanded:hover button.Write--close {
+  display: block;
+  left: initial;
 }

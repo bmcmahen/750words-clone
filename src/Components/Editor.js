@@ -46,7 +46,7 @@ export default class Editor extends React.Component {
   static getDerivedStateFromProps(props, state) {
     if (props.date !== state.prevPropsDate) {
       return {
-        editorState: deserialize(this.props.defaultEditorState),
+        editorState: deserialize(props.defaultEditorState),
         prevPropsDate: props.date
       };
     }
@@ -65,7 +65,7 @@ export default class Editor extends React.Component {
           plugins={plugins}
         />
         <div className="Editor--save-state">
-          {words} {pluralize("word", words)}, {this.renderSaving()}
+          {this.renderSaving()} {words} {pluralize("word", words)}
         </div>
       </div>
     );
@@ -74,14 +74,13 @@ export default class Editor extends React.Component {
   renderSaving() {
     let str = "";
 
-    // if (this.state.saving) {
-    //   str += "Saving.";
-    // }
-
-    if (this.state.saved) {
-      str += "saved at " + this.state.saved.toLocaleTimeString("en-US");
+    if (this.state.saving) {
+      str += "Saving ";
+    } else if (this.state.saved) {
+      // str += "saved at " + this.state.saved.toLocaleTimeString("en-US");
+      str += "Saved ";
     } else {
-      str += "unsaved";
+      str += "";
     }
 
     return str;

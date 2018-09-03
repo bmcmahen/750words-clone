@@ -21,7 +21,9 @@ export default class Write extends React.Component {
   state = {
     dateString: getDateStringForEntry(this.props.match),
     existingEntry: null,
-    loading: true
+    loading: true,
+    expanded:
+      typeof window.localStorage.getItem("expanded") === false ? false : true
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -107,21 +109,27 @@ export default class Write extends React.Component {
 
     return (
       <React.Fragment>
-        <nav>
-          <Helmet>
-            <title>{date.toLocaleDateString("en-US", options)}</title>
-          </Helmet>
+        <nav className={this.state.expanded ? "expanded" : "collapsed"}>
           <div>
-            {user.displayName}
-            {" | "}
-            <a href="#" onClick={this.signOut}>
-              Sign out
-            </a>
+            <button onClick={this.toggle} className="Write--close">
+              Toggle
+            </button>
+            <Helmet>
+              <title>{date.toLocaleDateString("en-US", options)}</title>
+            </Helmet>
+            <div className="Write--links">
+              <div className="Write--title">Ben & Paper</div>
+              <div className="sub">{user.displayName}</div>
+              <a className="sub" href="#" onClick={this.signOut}>
+                Sign out
+              </a>
+            </div>
+            <Streaks />
           </div>
         </nav>
-        <Streaks />
+
         <div className="Write">
-          <strong>{date.toLocaleDateString("en-US", options)}</strong>
+          <h3>{date.toLocaleDateString("en-US", options)}</h3>
           <Editor
             date={date}
             defaultEditorState={existingEntry ? existingEntry.content : null}
@@ -131,6 +139,12 @@ export default class Write extends React.Component {
       </React.Fragment>
     );
   }
+
+  toggle = () => {
+    const existing = this.state.expanded;
+    this.setState({ expanded: !existing });
+    window.localStorage.setItem("expanded", !existing);
+  };
 
   signOut = e => {
     e.preventDefault();

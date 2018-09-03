@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import {
   getFirstDayOfMonth,
   getLastDayOfMonth,
@@ -14,6 +15,17 @@ import "./Tooltip.css";
 import "./Streaks.css";
 
 const log = debug("app:Streaks");
+
+function linearConversion(a, b) {
+  var o = a[1] - a[0],
+    n = b[1] - b[0];
+
+  return function(x) {
+    return ((x - a[0]) * n) / o + b[0];
+  };
+}
+
+const conversion = linearConversion([0, 1000], [0, 4]);
 
 class Streaks extends React.Component {
   state = {
@@ -71,6 +83,27 @@ class Streaks extends React.Component {
         <CalendarHeatmap
           startDate={startOfMonth}
           endDate={endOfMonth}
+          classForValue={value => {
+            let cx = "";
+            if (value && value.count) {
+              cx += "clickable ";
+            }
+
+            if (value && value.count) {
+              let count = conversion(value.count);
+
+              if (count > 4) count = 4;
+              cx += `color-github-${Math.ceil(count)} `;
+            }
+
+            if (!value) {
+              cx += `color-empty `;
+            }
+            return cx;
+          }}
+          onClick={value => {
+            this.props.history.push("/" + convertDateToString(value.date));
+          }}
           showMonthLabels={false}
           titleForValue={this.getTitle}
           tooltipDataAttrs={this.getTooltipDataAttrs}
@@ -83,4 +116,4 @@ class Streaks extends React.Component {
   }
 }
 
-export default Streaks;
+export default withRouter(Streaks);
