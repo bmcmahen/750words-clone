@@ -118,8 +118,20 @@ export default class Write extends React.Component {
               <title>{date.toLocaleDateString("en-US", options)}</title>
             </Helmet>
             <div className="Write--links">
-              <div className="Write--title">Ben & Paper</div>
-              <div className="sub">{user.displayName}</div>
+              <div className="Write--title">
+                {
+                  // user.displayName.split(" ")[0] + "'s Journal"}
+                  "Daily Mind"
+                }
+              </div>
+
+              {/*
+              <a className="sub" href="#" onClick={this.signOut}>
+                Settings
+              </a>
+              <a className="sub" href="#" onClick={this.signOut}>
+                Search
+              </a> */}
               <a className="sub" href="#" onClick={this.signOut}>
                 Sign out
               </a>

@@ -1,72 +1,72 @@
-const functions = require('firebase-functions');
-const algoliasearch = require('algoliasearch')
-const admin = require("admin");
+// const functions = require('firebase-functions');
+// const algoliasearch = require('algoliasearch')
+// const admin = require("admin");
 
-// Algolia search support
-const ALGOLIA_ID = functions.config().algolia.app_id;
-const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
-const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
+// // Algolia search support
+// const ALGOLIA_ID = functions.config().algolia.app_id;
+// const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
+// const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
 
-const ALGOLIA_INDEX_NAME = 'posts';
+// const ALGOLIA_INDEX_NAME = 'posts';
 
-const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY)
+// const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY)
 
-exports.onPostCreated = function.firestore.document('/posts/{postId}').onCreate((snap, context) => {
-  const post = snap.data()
-  post.objectID = context.params.postId
-  const index = client.initIndex(ALGOLIA_INDEX_NAME)
-  return index.saveObject(note)
-})
+// exports.onPostCreated = function.firestore.document('/posts/{postId}').onCreate((snap, context) => {
+//   const post = snap.data()
+//   post.objectID = context.params.postId
+//   const index = client.initIndex(ALGOLIA_INDEX_NAME)
+//   return index.saveObject(note)
+// })
 
-function getFirebaseUser(req, res, next) {
-  console.log("Check if request is authorized with Firebase ID token");
+// function getFirebaseUser(req, res, next) {
+//   console.log("Check if request is authorized with Firebase ID token");
 
-  if (
-    !req.headers.authorization ||
-    !req.headers.authorization.startsWith("Bearer ")
-  ) {
-    console.error(
-      "No Firebase ID token was passed as a Bearer token in the Authorization header.",
-      "Make sure you authorize your request by providing the following HTTP header:",
-      "Authorization: Bearer <Firebase ID Token>"
-    );
-    res.status(403).send("Unauthorized");
-    return;
-  }
+//   if (
+//     !req.headers.authorization ||
+//     !req.headers.authorization.startsWith("Bearer ")
+//   ) {
+//     console.error(
+//       "No Firebase ID token was passed as a Bearer token in the Authorization header.",
+//       "Make sure you authorize your request by providing the following HTTP header:",
+//       "Authorization: Bearer <Firebase ID Token>"
+//     );
+//     res.status(403).send("Unauthorized");
+//     return;
+//   }
 
-  let idToken;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer ")
-  ) {
-    console.log("Found 'Authorization' header");
-    idToken = req.headers.authorization.split("Bearer ")[1];
-  }
+//   let idToken;
+//   if (
+//     req.headers.authorization &&
+//     req.headers.authorization.startsWith("Bearer ")
+//   ) {
+//     console.log("Found 'Authorization' header");
+//     idToken = req.headers.authorization.split("Bearer ")[1];
+//   }
 
-  admin
-    .auth()
-    .verifyIdToken(idToken)
-    .then(decodedIdToken => {
-      console.log("ID Token correctly decoded", decodedIdToken);
-      req.user = decodedIdToken;
-      next();
-    })
-    .catch(error => {
-      console.error("Error while verifying Firebase ID token:", error);
-      res.status(403).send("Unauthorized");
-    });
-}
+//   admin
+//     .auth()
+//     .verifyIdToken(idToken)
+//     .then(decodedIdToken => {
+//       console.log("ID Token correctly decoded", decodedIdToken);
+//       req.user = decodedIdToken;
+//       next();
+//     })
+//     .catch(error => {
+//       console.error("Error while verifying Firebase ID token:", error);
+//       res.status(403).send("Unauthorized");
+//     });
+// }
 
-const app = require('express')()
-app.use(require('cors')({ origin: true }))
-app.use(getFirebaseUser)
-app.get('/', (req, res) => {
-  const params = {
-    filters: `userId:${req.user.user_id}`,
-    userToken: req.user.user_id
-  }
-  const key = client.generateSecuredApiKey(ALGOLIA_SEARCH_KEY, params);
-  res.json({ key })
-})
+// const app = require('express')()
+// app.use(require('cors')({ origin: true }))
+// app.use(getFirebaseUser)
+// app.get('/', (req, res) => {
+//   const params = {
+//     filters: `userId:${req.user.user_id}`,
+//     userToken: req.user.user_id
+//   }
+//   const key = client.generateSecuredApiKey(ALGOLIA_SEARCH_KEY, params);
+//   res.json({ key })
+// })
 
-exports.getSearchKey = functions.https.onRequest(app)
+// exports.getSearchKey = functions.https.onRequest(app)
