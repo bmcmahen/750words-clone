@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "algoliasearch": "^3.30.0",
     "debounce": "^1.2.0",
     "debug": "^3.1.0",
     "draft-js": "^0.10.5",
@@ -11,11 +12,13 @@
     "firebase": "^5.4.2",
     "pluralize": "^7.0.0",
     "react": "^16.4.2",
+    "react-calendar-heatmap": "^1.6.3",
     "react-dom": "^16.4.2",
     "react-helmet": "^5.2.0",
     "react-router": "^4.3.1",
     "react-scripts": "1.1.5",
-    "react-textarea-autosize": "^7.0.4"
+    "react-textarea-autosize": "^7.0.4",
+    "react-tooltip": "^3.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -19,3 +19,11 @@ export const isValidDateString = str => {
 export const convertDateToString = date => {
   return date.toLocaleDateString("en-US").replace(/\//g, "-");
 };
+
+export const getFirstDayOfMonth = (date = new Date()) => {
+  return new Date(date.getFullYear(), date.getMonth(), 0);
+};
+
+export const getLastDayOfMonth = (date = new Date()) => {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+};

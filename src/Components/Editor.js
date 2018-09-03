@@ -107,7 +107,15 @@ export default class Editor extends React.Component {
 
   onSave = () => {
     this.props.onRequestSave(
-      serialize(this.state.editorState),
+      {
+        content: serialize(this.state.editorState),
+        wordCount: this.state.editorState
+          .getCurrentContent()
+          .getPlainText()
+          .trim()
+          .split(" ").length,
+        text: this.state.editorState.getCurrentContent().getPlainText()
+      },
       this.props.date
     );
     this.setState({ saving: false, saved: new Date() });

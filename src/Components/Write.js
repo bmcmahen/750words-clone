@@ -13,6 +13,7 @@ import Helmet from "react-helmet";
 
 import { getEntry, setEntry } from "../db";
 import { signOut } from "../auth";
+import Streaks from "./Streaks";
 
 const log = debug("app:Write");
 
@@ -67,12 +68,15 @@ export default class Write extends React.Component {
     }
   };
 
-  saveStateForDate = async (content, dateString) => {
+  saveStateForDate = async ({ content, text, wordCount }, dateString) => {
     const user = firebase.auth().currentUser;
     try {
       const entry = await setEntry(user.uid, dateString, {
         content,
+        text,
+        wordCount,
         dateString,
+        date: convertDateStringToDate(dateString),
         userId: user.uid
       });
     } catch (err) {
@@ -115,6 +119,7 @@ export default class Write extends React.Component {
             </a>
           </div>
         </nav>
+        <Streaks />
         <div className="Write">
           <strong>{date.toLocaleDateString("en-US", options)}</strong>
           <Editor
