@@ -1,0 +1,44 @@
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-circle {
+  0% {
+    stroke-dashoffset: 600;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.Loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Loading svg {
+  width: 50px;
+  animation: loading 2s linear infinite;
+}
+
+.Loading svg circle {
+  stroke-dashoffset: 600;
+  stroke-dasharray: 300;
+  stroke-width: 12;
+  stroke-miterlimit: 10;
+  stroke-linecap: round;
+  animation: loading-ricle 1.6s cubic-bezier(0.4, 0.15, 0.6, 0.85) infinite;
+  stroke: #42b983;
+  fill: transparent;
+}

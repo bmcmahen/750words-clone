@@ -59,12 +59,14 @@ export default class Write extends React.Component {
 
     try {
       this.setState({ loading: true, error: false });
+      log("get entry: uid: %s, date: %s", user.uid, dateString);
       const entry = await getEntry(user.uid, dateString);
       this.setState({
         existingEntry: entry.exists ? entry.data() : null,
         loading: false
       });
     } catch (err) {
+      console.error("Error fetching:");
       console.error(err);
       this.setState({ loading: false, error: true });
     }

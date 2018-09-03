@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Routes from "./Router/routes";
 import firebase from "firebase";
+import Loading from "./Components/Loading";
 import "./App.css";
 
 class App extends Component {
@@ -18,7 +19,7 @@ class App extends Component {
     const { loaded } = this.state;
 
     if (!loaded) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
 
     return (

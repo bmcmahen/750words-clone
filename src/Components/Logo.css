@@ -1,0 +1,11 @@
+.Logo {
+  display: flex;
+  margin: 2rem;
+  margin-top: 0rem;
+  padding-top: 1rem;
+}
+
+.Logo > h1 {
+  font-size: 18px;
+  color: #42b983;
+}

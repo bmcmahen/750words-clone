@@ -13,6 +13,11 @@ db.settings({
   timestampsInSnapshots: true
 });
 
+db.enablePersistence().catch(function(err) {
+  console.error("Persistence failed");
+  console.error(err);
+});
+
 // date should be formatted dd/mm/yy
 export const getEntry = (uid, date) => {
   const ref = db.collection("posts").doc(uid + date);
