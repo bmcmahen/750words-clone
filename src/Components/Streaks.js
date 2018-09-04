@@ -102,7 +102,9 @@ class Streaks extends React.Component {
             return cx;
           }}
           onClick={value => {
-            this.props.history.push("/" + convertDateToString(value.date));
+            if (value && value.date) {
+              this.props.history.push("/" + convertDateToString(value.date));
+            }
           }}
           showMonthLabels={false}
           titleForValue={this.getTitle}

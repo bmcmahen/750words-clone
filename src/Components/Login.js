@@ -8,6 +8,8 @@ import google from "./login-google.svg";
 import Helmet from "react-helmet";
 import Logo from "./Logo";
 import pencil from "./logo.svg";
+import toaster from "toasted-notes";
+import "toasted-notes/umd/main.css";
 
 export default class Login extends React.Component {
   state = {
@@ -72,7 +74,8 @@ export default class Login extends React.Component {
       this.setState({ redirect: true, loading: false });
     } catch (err) {
       console.error(err);
-      this.setState({ loading: false, error: true });
+      toaster.notify(err.message || "An error occurred while logging in.");
+      this.setState({ loading: false });
     }
   };
 }

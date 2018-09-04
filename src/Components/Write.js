@@ -123,7 +123,7 @@ export default class Write extends React.Component {
               <div className="Write--title">
                 {
                   // user.displayName.split(" ")[0] + "'s Journal"}
-                  "Daily Mind"
+                  "Word Herder"
                 }
               </div>
 

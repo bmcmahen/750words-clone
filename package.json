@@ -18,7 +18,8 @@
     "react-router": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-textarea-autosize": "^7.0.4",
-    "react-tooltip": "^3.6.1"
+    "react-tooltip": "^3.6.1",
+    "toasted-notes": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
