@@ -6,9 +6,23 @@ import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import debounce from "debounce";
 import pluralize from "pluralize";
 import debug from "debug";
+import createLinkPlugin from "draft-js-anchor-plugin";
+import createEmojiPlugin from "draft-js-emoji-plugin";
+import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
+import { BoldButton, ItalicButton, UnderlineButton } from "draft-js-buttons";
 
 import "./Editor.css";
 import "draft-js-linkify-plugin/lib/plugin.css";
+import "draft-js-emoji-plugin/lib/plugin.css";
+import "draft-js-inline-toolbar-plugin/lib/plugin.css";
+import "draft-js-anchor-plugin/lib/plugin.css";
+
+const emojiPlugin = createEmojiPlugin();
+const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+
+const linkPlugin = createLinkifyPlugin();
+
+const inlineToolbarPlugin = createInlineToolbarPlugin();
 
 const log = debug("app:Editor");
 
@@ -31,7 +45,9 @@ export const serialize = state => {
   return JSON.stringify(convertToRaw(content));
 };
 
-const plugins = [createLinkifyPlugin()];
+const plugins = [createLinkifyPlugin(), inlineToolbarPlugin, linkPlugin];
+
+const { InlineToolbar } = inlineToolbarPlugin;
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -64,6 +80,8 @@ export default class Editor extends React.Component {
           onChange={this.onChange}
           plugins={plugins}
         />
+        <InlineToolbar />
+        <EmojiSuggestions />
         <div className="Editor--save-state">
           {this.renderSaving()} {words} {pluralize("word", words)}
         </div>
