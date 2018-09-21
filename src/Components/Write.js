@@ -7,18 +7,41 @@ import {
   getDateStringForEntry,
   isValidDateString,
   convertDateStringToDate,
-  convertDateToString
+  convertDateToString,
+  prettifyDate
 } from "./dates";
 import Helmet from "react-helmet";
 
 import { getEntry, setEntry } from "../db";
 import { signOut } from "../auth";
 import Streaks from "./Streaks";
+import SearchElement from "./Search";
+import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
+import IconButton from "./IconButton";
+
+import search from "./search.svg";
+import Popover from "./Popover";
 
 const log = debug("app:Write");
 
+const Result = ({ hit }) => {
+  const highlight = hit._snippetResult;
+
+  return (
+    <Link className="Navbar-Result" to={hit.dateString}>
+      <div>
+        <div className="Navbar-Result-date">{prettifyDate(hit.dateString)}</div>
+
+        <p dangerouslySetInnerHTML={{ __html: highlight.text.value }} />
+      </div>
+    </Link>
+  );
+};
+
 export default class Write extends React.Component {
   state = {
+    searching: false,
     dateString: getDateStringForEntry(this.props.match),
     existingEntry: null,
     loading: true,
@@ -79,7 +102,9 @@ export default class Write extends React.Component {
         content,
         text,
         wordCount,
+        updatedAt: new Date(),
         dateString,
+        indexed: false,
         date: convertDateStringToDate(dateString),
         userId: user.uid
       });
@@ -109,46 +134,78 @@ export default class Write extends React.Component {
       return null;
     }
 
+    const { searching } = this.state;
+
     return (
       <React.Fragment>
-        <nav className={this.state.expanded ? "expanded" : "collapsed"}>
-          <div>
-            <button onClick={this.toggle} className="Write--close">
-              Toggle
-            </button>
-            <Helmet>
-              <title>{date.toLocaleDateString("en-US", options)}</title>
-            </Helmet>
-            <div className="Write--links">
-              <div className="Write--title">
-                {
-                  // user.displayName.split(" ")[0] + "'s Journal"}
-                  "Word Herder"
-                }
-              </div>
+        <Helmet>
+          <title>{date.toLocaleDateString("en-US", options)}</title>
+        </Helmet>
 
-              {/*
-              <a className="sub" href="#" onClick={this.signOut}>
-                Settings
-              </a>
-              <a className="sub" href="#" onClick={this.signOut}>
-                Search
-              </a> */}
-              <a className="sub" href="#" onClick={this.signOut}>
-                Sign out
-              </a>
-            </div>
-            <Streaks />
-          </div>
+        <nav className="Write-branding">
+          <h4>
+            whatever.
+            <span style={{ color: "#08e" }}>ink</span>
+          </h4>
         </nav>
 
-        <div className="Write">
-          <h3>{date.toLocaleDateString("en-US", options)}</h3>
-          <Editor
-            date={date}
-            defaultEditorState={existingEntry ? existingEntry.content : null}
-            onRequestSave={this.onRequestSave}
-          />
+        <nav className="Write-nav">
+          <IconButton
+            active={this.state.mode === "searching"}
+            onClick={() => {
+              this.setState({ popover: true, mode: "searching" }, () => {
+                const input = document.getElementById("search");
+                if (input) {
+                  input.focus();
+                }
+              });
+            }}
+          >
+            {require("./search-dark.svg")}
+          </IconButton>
+          <IconButton
+            active={this.state.mode === "activity"}
+            onClick={() => {
+              this.setState({ popover: true, mode: "activity" });
+            }}
+          >
+            {require("./activity.svg")}
+          </IconButton>
+          <IconButton onClick={this.signOut}>
+            {require("./log-out.svg")}
+          </IconButton>
+        </nav>
+        <Popover
+          showing={this.state.popover}
+          onRequestClose={() => {
+            this.setState({ popover: false, mode: null });
+          }}
+        >
+          {this.state.mode === "searching" ? (
+            <SearchElement>
+              {results => {
+                if (results.hits && results.hits.length > 0) {
+                  return results.hits.map(hit => (
+                    <Result key={hit.objectID} hit={hit} />
+                  ));
+                }
+
+                return null;
+              }}
+            </SearchElement>
+          ) : (
+            <Streaks />
+          )}
+        </Popover>
+        <div className="Write-container">
+          <div className="Write">
+            <h3>{date.toLocaleDateString("en-US", options)}</h3>
+            <Editor
+              date={date}
+              defaultEditorState={existingEntry ? existingEntry.content : null}
+              onRequestSave={this.onRequestSave}
+            />
+          </div>
         </div>
       </React.Fragment>
     );

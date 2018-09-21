@@ -1,0 +1,38 @@
+.Search form {
+  padding: 1rem;
+  padding-bottom: 0;
+}
+.Search input {
+  border: none;
+  height: 30px;
+  width: 100%;
+  line-height: 30px;
+  box-sizing: border-box;
+  padding: 0 15px 0 30px;
+  border: 1px solid #e3e3e3;
+  color: #2c3e50;
+  outline: none;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  border-radius: 15px;
+  margin-right: 10px;
+  background: #fff url(./search.svg) 8px 5px no-repeat;
+  background-size: 16px;
+  vertical-align: middle !important;
+}
+
+.Search input:focus {
+  border-color: #42b983;
+}
+
+.Search input::placeholder {
+  color: #e3e3e3;
+}
+
+.Search-hint {
+  padding: 1rem;
+
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+}

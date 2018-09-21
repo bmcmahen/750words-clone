@@ -1,0 +1,23 @@
+.IconButton {
+  border-radius: 4px;
+  line-height: 32px;
+  height: 32px;
+  width: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  justify-content: center;
+}
+
+.IconButton:hover {
+  background-color: #fafafa;
+}
+
+.IconButton img {
+  width: 20px;
+  height: 20px;
+}

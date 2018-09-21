@@ -1,0 +1,18 @@
+.Popover {
+  height: calc(100vh - 70px);
+  background: #fafafa;
+  z-index: 10;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 60px;
+  border-radius: 8px;
+  margin: 10px;
+  margin-top: 0;
+  right: 0;
+  width: 400px;
+  display: none;
+}
+
+.Popover.showing {
+  display: block;
+}

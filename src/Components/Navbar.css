@@ -1,0 +1,62 @@
+.Navbar {
+}
+
+.Navbar-triggers {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.Navbar-Result {
+  text-decoration: none;
+  color: initial;
+  display: block;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.Navbar-Result > * {
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.Navbar-Result:hover > * {
+  background-color: white;
+}
+
+.Navbar-Result em {
+  color: #08e;
+}
+
+.Navbar-Result p {
+  margin: 0;
+}
+
+.Navbar-Result-date {
+  font-weight: bold;
+}
+
+.Navbar-searchpanel {
+  height: 100vh;
+  overflow: hidden;
+  background: #fafafa;
+  position: relative;
+  z-index: 10;
+  width: 0;
+}
+
+.Navbar-searchpanel > div {
+  border-left: 1px solid #eee;
+  height: 100vh;
+  overflow-y: scroll;
+  width: 400px;
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.Navbar-searchpanel.showing {
+  width: 400px;
+}

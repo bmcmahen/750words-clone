@@ -13,6 +13,7 @@
     "draft-js-inline-toolbar-plugin": "^2.0.3",
     "draft-js-linkify-plugin": "^2.0.1",
     "draft-js-plugins-editor": "^2.1.1",
+    "es6-promise-pool": "^2.5.0",
     "firebase": "^5.4.2",
     "pluralize": "^7.0.0",
     "react": "^16.4.2",
@@ -23,6 +24,7 @@
     "react-scripts": "1.1.5",
     "react-textarea-autosize": "^7.0.4",
     "react-tooltip": "^3.6.1",
+    "secure-compare": "^3.0.1",
     "toasted-notes": "^1.1.0"
   },
   "scripts": {

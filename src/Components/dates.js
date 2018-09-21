@@ -27,3 +27,18 @@ export const getFirstDayOfMonth = (date = new Date()) => {
 export const getLastDayOfMonth = (date = new Date()) => {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0);
 };
+
+export const prettifyDate = date => {
+  if (typeof date === "string") {
+    date = convertDateStringToDate(date);
+  }
+
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  };
+
+  return date.toLocaleDateString("en-US", options);
+};
